@@ -16,11 +16,13 @@ class ViewController: UIViewController {
     
     var myBalloonsImage:[balloons] = []
     
+    var currentIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-     var myBalloons = balloons()
+  /*   var myBalloons = balloons()
          myBalloons.numberOfBalloons = 1
          myBalloons.image = UIImage (named: "RedBalloon1.jpg")
         
@@ -39,7 +41,9 @@ class ViewController: UIViewController {
         fourthBalloons.numberOfBalloons = 4
         fourthBalloons.image = UIImage (named: "RedBalloon4.jpg")
         
-        myBalloonsImage += [myBalloons,secondBalloons,thirdBalloons,fourthBalloons]
+        myBalloonsImage += [myBalloons,secondBalloons,thirdBalloons,fourthBalloons] */
+        
+        self.createBalloons()
         
     }
 
@@ -51,12 +55,50 @@ class ViewController: UIViewController {
     
     @IBAction func whenNextButtonPressed(sender: UIBarButtonItem) {
         
-        var randomindex = Int(arc4random_uniform(UInt32(myBalloonsImage.count)))
-        let nextBalloonPic = myBalloonsImage[randomindex]
+        /*var randomindex = Int(arc4random_uniform(UInt32(myBalloonsImage.count)))*/
+        let nextBalloonPic = myBalloonsImage[currentIndex]
         
-        numberOfBalloons.text = "\(nextBalloonPic.numberOfBalloons)"
+        numberOfBalloons.text = "\(nextBalloonPic.numberOfBalloons) Balloons"
         myImageView.image = nextBalloonPic.image
         
+        currentIndex += 1
+        
+        println (" \(myBalloonsImage.count)")
+        
+        // Reset index if we're too high
+        if currentIndex > myBalloonsImage.count - 1{
+            currentIndex = 0
+        }
+        
+       
+        
+    }
+    
+    func createBalloons() {
+        
+        for var ballons = 0 ; ballons < 99 ; ballons++ {
+        
+        var ballonsRandom = balloons()
+        
+            ballonsRandom.numberOfBalloons = ballons
+            
+        var balloonsImage = Int(arc4random_uniform(UInt32(4)))
+        
+            
+            switch balloonsImage {
+            
+            case 1:
+                ballonsRandom.image = UIImage (named: "RedBalloon1.jpg")
+            case 2:
+                ballonsRandom.image = UIImage (named: "RedBalloon2.jpg")
+            case 3:
+                ballonsRandom.image = UIImage (named: "RedBalloon3.jpg")
+            default:
+                ballonsRandom.image = UIImage (named: "RedBalloon4.jpg")
+                
+            }
+                self.myBalloonsImage.append(ballonsRandom)
+        }
     }
 
 
